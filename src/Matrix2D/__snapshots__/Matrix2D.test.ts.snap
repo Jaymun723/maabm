@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Matrix2D .apply 1`] = `
+Array [
+  Array [
+    0,
+    1,
+    2,
+    3,
+    4,
+  ],
+  Array [
+    10,
+    11,
+    12,
+    13,
+    14,
+  ],
+  Array [
+    20,
+    21,
+    22,
+    23,
+    24,
+  ],
+  Array [
+    30,
+    31,
+    32,
+    33,
+    34,
+  ],
+  Array [
+    40,
+    41,
+    42,
+    43,
+    44,
+  ],
+]
+`;
+
+exports[`Matrix2D The initialisation 1`] = `
+Array [
+  Array [
+    0,
+    0,
+    0,
+    0,
+  ],
+  Array [
+    0,
+    0,
+    0,
+    0,
+  ],
+  Array [
+    0,
+    0,
+    0,
+    0,
+  ],
+]
+`;

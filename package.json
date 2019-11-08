@@ -4,7 +4,8 @@
   "description": "Math And A Bit More, mainly linear algebra functions.",
   "main": "dist/cjs/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc -p tsconfig.build.json"
   },
   "repository": {
     "type": "git",
