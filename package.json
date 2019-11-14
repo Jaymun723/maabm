@@ -2,7 +2,7 @@
   "name": "maabm",
   "version": "1.0.0",
   "description": "Math And A Bit More, mainly linear algebra functions.",
-  "main": "dist/cjs/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "jest",
     "build": "tsc -p tsconfig.build.json"
