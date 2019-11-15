@@ -10,10 +10,9 @@ export class Vec2D {
   }
 
   add(other: Vec2D): Vec2D
-  add(scalar: number): Vec2D
   add(x: number, y: number): Vec2D
   add(a: Vec2D | number, b?: number): Vec2D {
-    let otherVec = typeof a === "number" ? new Vec2D(a, b || a) : a
+    let otherVec = typeof a === "number" ? new Vec2D(a, b || 0) : a
     return this.merge(otherVec, (a, b) => a + b)
   }
 
