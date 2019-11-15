@@ -1,3 +1,5 @@
+import { clamp } from "../utils"
+
 export class Vec2D {
   constructor(public readonly x: number, public readonly y: number) {}
 
@@ -45,5 +47,11 @@ export class Vec2D {
 
   dot(other: Vec2D): number {
     return this.x * other.x + this.y * other.y
+  }
+
+  clamp(min: number, max: number): Vec2D
+  clamp(xMin: number, xMax: number, yMin: number, yMax: number): Vec2D
+  clamp(min: number, max: number, yMin?: number, yMax?: number): Vec2D {
+    return new Vec2D(clamp(this.x, min, max), clamp(this.y, yMin || min, yMax || max))
   }
 }
