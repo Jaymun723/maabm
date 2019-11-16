@@ -3,8 +3,12 @@ import { clamp } from "../utils"
 export class Vec2D {
   constructor(public readonly x: number, public readonly y: number) {}
 
-  apply(fn: (a: number, i: number) => number): Vec2D {
+  map(fn: (a: number, i: number) => number): Vec2D {
     return new Vec2D(fn(this.x, 0), fn(this.y, 0))
+  }
+
+  apply(xFn: (x: number) => number, yFn: (y: number) => number): Vec2D {
+    return new Vec2D(xFn(this.x), yFn(this.y))
   }
 
   merge(other: Vec2D, fn: (a: number, b: number, i: number) => number): Vec2D {
@@ -26,11 +30,11 @@ export class Vec2D {
   }
 
   mul(scalar: number): Vec2D {
-    return this.apply((a) => a * scalar)
+    return this.map((a) => a * scalar)
   }
 
   div(scalar: number): Vec2D {
-    return this.apply((a) => a / scalar)
+    return this.map((a) => a / scalar)
   }
 
   norm(): number {
