@@ -69,4 +69,16 @@ export class Vec2D {
   clamp(min: number, max: number, yMin?: number, yMax?: number): Vec2D {
     return new Vec2D(clamp(this.x, min, max), clamp(this.y, yMin || min, yMax || max))
   }
+
+  /** Rotate the vector around the other vector by the angle (rad) */
+  rotateAround(other: Vec2D, angle: number): Vec2D {
+    const diagVec = this.sub(other)
+
+    return other.add(
+      new Vec2D(
+        diagVec.x * Math.cos(angle) - diagVec.y * Math.sin(angle),
+        diagVec.y * Math.sin(angle) + diagVec.y * Math.cos(angle)
+      )
+    )
+  }
 }
