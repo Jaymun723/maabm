@@ -29,16 +29,27 @@ export class Vec2D {
     return this.merge(otherVec, (a, b) => a - b)
   }
 
-  mul(scalar: number): Vec2D {
-    return this.map((a) => a * scalar)
+  /** Multiply the x and y of a vector by the x and y of an other */
+  mul(other: Vec2D): Vec2D
+  mul(scalar: number): Vec2D
+  mul(a: number | Vec2D) {
+    if (typeof a === "number") {
+      return this.map((n) => n * a)
+    }
+    return this.merge(a, (n, b) => n * b)
   }
 
-  div(scalar: number): Vec2D {
-    return this.map((a) => a / scalar)
+  div(other: Vec2D): Vec2D
+  div(scalar: number): Vec2D
+  div(a: number | Vec2D) {
+    if (typeof a === "number") {
+      return this.map((n) => n / a)
+    }
+    return this.merge(a, (n, b) => n / b)
   }
 
   norm(): number {
-    return Math.sqrt(this.x ** 2 + this.y ** 2)
+    return Math.sqrt(this.squaredNorm())
   }
 
   squaredNorm(): number {
