@@ -77,7 +77,7 @@ export class Vec2D {
     return other.add(
       new Vec2D(
         diagVec.x * Math.cos(angle) - diagVec.y * Math.sin(angle),
-        diagVec.y * Math.sin(angle) + diagVec.y * Math.cos(angle)
+        diagVec.x * Math.sin(angle) + diagVec.y * Math.cos(angle)
       )
     )
   }

@@ -1,6 +1,6 @@
 {
   "name": "maabm",
-  "version": "1.4.2",
+  "version": "1.4.4",
   "description": "Math And A Bit More, mainly linear algebra functions.",
   "main": "dist/index.js",
   "scripts": {
