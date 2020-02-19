@@ -48,6 +48,11 @@ export class Vec2D {
     return this.merge(a, (n, b) => n / b)
   }
 
+  normalize(): Vec2D {
+    const norm = this.norm()
+    return new Vec2D(this.x / norm, this.y / norm)
+  }
+
   norm(): number {
     return Math.sqrt(this.squaredNorm())
   }
