@@ -3,6 +3,10 @@ import { clamp } from "../utils"
 export class Vec2D {
   constructor(public readonly x: number, public readonly y: number) {}
 
+  static from(obj: { x: number; y: number }) {
+    return new Vec2D(obj.x, obj.y)
+  }
+
   map(fn: (a: number, i: number) => number): Vec2D {
     return new Vec2D(fn(this.x, 0), fn(this.y, 0))
   }
