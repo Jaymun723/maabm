@@ -1,6 +1,6 @@
 {
   "name": "maabm",
-  "version": "1.7.0",
+  "version": "1.9.0",
   "description": "Math And A Bit More, mainly linear algebra functions.",
   "main": "dist/index.js",
   "scripts": {
@@ -24,6 +24,7 @@
   "homepage": "https://github.com/Jaymun723/maabm#readme",
   "devDependencies": {
     "@types/jest": "^24.0.20",
+    "@types/node": "^13.11.0",
     "jest": "^24.9.0",
     "ts-jest": "^24.1.0",
     "ts-node": "^8.4.1",

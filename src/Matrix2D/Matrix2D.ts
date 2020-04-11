@@ -1,3 +1,5 @@
+import { randfloat } from "../random"
+
 /**
  * @typedef ApplyFunction
  * @param {number} val The value of the element
@@ -20,7 +22,7 @@ type MergeFunction = (a: number, b: number, x: number, y: number) => number
 export class Matrix2D {
   private _data: number[][] = []
 
-  constructor(public width: number, public height: number, initialData?: number[][]) {
+  constructor(public readonly width: number, public readonly height: number, initialData?: number[][]) {
     if (initialData) {
       this.setData(initialData)
     } else {
@@ -28,7 +30,22 @@ export class Matrix2D {
     }
   }
 
-  testData(data: any): data is number[][] {
+  static random(width: number, height: number) {
+    let data: number[][] = []
+    for (let i = 0; i < width; i++) {
+      data.push([])
+      for (let j = 0; j < height; j++) {
+        data[i].push(randfloat(-1, 1))
+      }
+    }
+    return new Matrix2D(width, height, data)
+  }
+
+  public copy() {
+    return new Matrix2D(this.width, this.height, this._data)
+  }
+
+  public testData(data: any): data is number[][] {
     if (Array.isArray(data) && data.length === this.width) {
       for (const subData of data) {
         if (!Array.isArray(subData) || subData.length !== this.height || subData.some((a) => typeof a !== "number")) {
@@ -40,19 +57,19 @@ export class Matrix2D {
     return false
   }
 
-  get(x: number, y: number): number {
+  public get(x: number, y: number): number {
     return this._data[x][y]
   }
 
-  set(x: number, y: number) {
-    this._data[x][y]
+  public set(x: number, y: number, value: number) {
+    this._data[x][y] = value
   }
 
-  get data() {
+  public get data() {
     return this._data
   }
 
-  setData(data: any) {
+  public setData(data: any) {
     if (this.testData(data)) {
       this._data = data
     } else {
@@ -64,7 +81,7 @@ export class Matrix2D {
     return a.data.map((col, x) => col.map((val, y) => fn(val, x, y)))
   }
 
-  apply(fn: ApplyFunction) {
+  public apply(fn: ApplyFunction) {
     this._data = Matrix2D.apply(this, fn)
   }
 
@@ -75,41 +92,85 @@ export class Matrix2D {
     return Matrix2D.apply(a, (i, x, y) => fn(i, b.get(x, y), x, y))
   }
 
-  merge(b: Matrix2D, fn: MergeFunction) {
+  public merge(b: Matrix2D, fn: MergeFunction) {
     this._data = Matrix2D.merge(this, b, fn)
   }
 
   static add(a: Matrix2D, b: Matrix2D) {
-    return new Matrix2D(a.width, b.width, Matrix2D.merge(a, b, (i, j) => i + j))
+    if (a.width !== b.width || a.height !== b.height) {
+      throw new Error("The matrixes don't have the same size.")
+    }
+    return new Matrix2D(
+      a.width,
+      a.height,
+      Matrix2D.merge(a, b, (i, j) => i + j)
+    )
   }
 
-  add(a: Matrix2D) {
+  public add(a: Matrix2D) {
     const res = Matrix2D.add(this, a)
     this._data = res._data
   }
 
   static sub(a: Matrix2D, b: Matrix2D) {
-    return new Matrix2D(a.width, b.width, Matrix2D.merge(a, b, (i, j) => i - j))
+    return new Matrix2D(
+      a.width,
+      b.width,
+      Matrix2D.merge(a, b, (i, j) => i - j)
+    )
   }
 
-  sub(a: Matrix2D) {
+  public sub(a: Matrix2D) {
     const res = Matrix2D.add(this, a)
     this._data = res._data
   }
 
-  static mult(m: Matrix2D, s: number) {
-    return new Matrix2D(m.width, m.height, Matrix2D.apply(m, (v) => v * s))
+  static mult(a: Matrix2D, b: Matrix2D): number
+  static mult(m: Matrix2D, s: number): Matrix2D
+  static mult(a: Matrix2D, b: number | Matrix2D): any {
+    if (typeof b === "number") {
+      return new Matrix2D(
+        a.width,
+        a.height,
+        Matrix2D.apply(a, (v) => v * b)
+      )
+    } else {
+      if (a.height !== b.width) {
+        throw new Error("Invalid width and heights.")
+      }
+      const res = new Matrix2D(a.width, b.height)
+      for (let x = 0; x < res.width; x++) {
+        for (let y = 0; y < res.height; y++) {
+          let sum = 0
+          for (let k = 0; k < a.height; k++) {
+            sum += a.get(x, k) * b.get(k, y)
+          }
+          res.set(x, y, sum)
+        }
+      }
+      return res
+    }
   }
 
-  mult(s: number) {
-    this.apply((v) => v * s)
+  public mult(other: Matrix2D): Matrix2D
+  public mult(s: number): void
+  public mult(a: number | Matrix2D): any {
+    if (typeof a === "number") {
+      this.apply((v) => v * a)
+    } else {
+      return Matrix2D.mult(this, a)
+    }
   }
 
-  static div(m: Matrix2D, s: number) {
-    return new Matrix2D(m.width, m.height, Matrix2D.apply(m, (v) => v / s))
+  public static div(m: Matrix2D, s: number) {
+    return new Matrix2D(
+      m.width,
+      m.height,
+      Matrix2D.apply(m, (v) => v / s)
+    )
   }
 
-  div(s: number) {
+  public div(s: number) {
     this.apply((v) => v / s)
   }
 }

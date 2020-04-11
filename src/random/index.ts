@@ -18,13 +18,15 @@ export function randint(a: number, b?: number): number {
 /**
  * Returns a random number between min (inclusive) and max (inclusive)
  */
-export const randfloat = (min: number, max: number) => Math.random() * (max - min) + min
+export function randfloat(min: number, max: number) {
+  return Math.random() * (max - min) + min
+}
 
 /**
  * Returns a random element from the array.
  * @param array The array to retrieve an element from.
  */
-export const choice = <T>(array: T[]) => {
+export function choice<T>(array: T[]) {
   const i = randint(array.length - 1)
   return array[i]
 }

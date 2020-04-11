@@ -1,5 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Matrix2D #mult 1`] = `
+Matrix2D {
+  "_data": Array [
+    Array [
+      14,
+      19,
+    ],
+    Array [
+      6,
+      7,
+    ],
+  ],
+  "height": 2,
+  "width": 2,
+}
+`;
+
 exports[`Matrix2D .apply 1`] = `
 Array [
   Array [

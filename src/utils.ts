@@ -11,7 +11,9 @@
  * @param divided
  * @param divisor
  */
-export const eucDiv = (divided: number, divisor: number) => Math.floor(divided / divisor)
+export function eucDiv(divided: number, divisor: number) {
+  return Math.floor(divided / divisor)
+}
 
 /**
  * Assure that a value is between the min and max boundary.
@@ -25,7 +27,9 @@ export const eucDiv = (divided: number, divisor: number) => Math.floor(divided /
  * @param min
  * @param max
  */
-export const clamp = (value: number, min: number, max: number) => Math.min(Math.max(min, value), max)
+export function clamp(value: number, min: number, max: number) {
+  return Math.min(Math.max(min, value), max)
+}
 
 /**
  * Use the first function to create a "converter" for that precision (numbers of significant digits).
@@ -37,7 +41,9 @@ export const clamp = (value: number, min: number, max: number) => Math.min(Math.
  * ```
  * @param precision The precision is number significant digits.
  */
-export const toPrecision = (precision: number) => (n: number) => Number(n.toPrecision(precision))
+export function toPrecision(precision: number) {
+  return (n: number) => Number(n.toPrecision(precision))
+}
 
 /**
  * Creates an empty array with custom length and default value.
@@ -48,7 +54,9 @@ export const toPrecision = (precision: number) => (n: number) => Number(n.toPrec
  * @param length
  * @param baseValue Can be anything.
  */
-export const emptyArray = <T>(length: number, baseValue: T) => Array.from({ length }, () => baseValue)
+export function emptyArray<T>(length: number, baseValue: T) {
+  return Array.from({ length }, () => baseValue)
+}
 
 /**
  * Fonction to convert a value from a starting range to an end range.
@@ -63,5 +71,6 @@ export const emptyArray = <T>(length: number, baseValue: T) => Array.from({ leng
  * @param endMin Min boundary of the ending range.
  * @param endMax Max boundary of the ending range.
  */
-export const toRange = (value: number, startMin: number, startMax: number, endMin: number, endMax: number) =>
-  ((value - startMin) / (startMax - startMin)) * (endMax - endMin) + endMin
+export function toRange(value: number, startMin: number, startMax: number, endMin: number, endMax: number) {
+  return ((value - startMin) / (startMax - startMin)) * (endMax - endMin) + endMin
+}
