@@ -229,4 +229,10 @@ export class Vec2D {
       )
     )
   }
+
+  angleWith(other: Vec2D) {
+    return Math.acos(
+      this.dot(other) / (this.norm() * other.norm())
+    )
+  }
 }
