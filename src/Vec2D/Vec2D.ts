@@ -189,7 +189,11 @@ export class Vec2D {
 
   normalize(): Vec2D {
     const norm = this.norm()
-    return new Vec2D(this.x / norm, this.y / norm)
+    let multiplier = norm
+    if(norm > 0) {
+      multiplier = 1 / norm
+    }
+    return this.mul(multiplier)
   }
 
   norm(): number {
