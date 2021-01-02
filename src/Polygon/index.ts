@@ -11,6 +11,11 @@ export class Polygon {
     return edges
   }
 
+  static getNormals(polygon: Vec2D[]) {
+    const edges = Polygon.getEdges(polygon)
+    return edges.map((e) => new Vec2D(-e.y, e.x).normalize())
+  }
+
   static getCentroid(polygon: Vec2D[]) {
     const sum = polygon.reduce((prev, cur) => prev.add(cur))
     return sum.div(polygon.length)
