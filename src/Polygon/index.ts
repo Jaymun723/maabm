@@ -90,4 +90,29 @@ export class Polygon {
     }
     return area
   }
+
+  /**
+   * @param polygon The polygon represented by its convex points.
+   * @param point The point to test.
+   * @return  1: The point lies inside the polygon.
+   *          0: The point lies on the polygon.
+   *          -1: The point lies outside the polygon.
+   */
+  public static isPointIn(polygon: Vec2D[], point: Vec2D) {
+    const substitutePointInLine = (pt1: Vec2D, pt2: Vec2D, queryPoint: Vec2D) => {
+      return (queryPoint.y - pt1.y) * (pt2.x - pt1.x) - (queryPoint.x - pt1.x) * (pt2.y - pt1.y)
+    }
+
+    const numSidesOfPolygon = polygon.length
+    let countSameSideResults = 0
+    for (let i = 0; i < numSidesOfPolygon; i++) {
+      const pointInLine = substitutePointInLine(polygon[i], polygon[(i + 1) % numSidesOfPolygon], point)
+      if (pointInLine == 0) {
+        return pointInLine
+      }
+
+      countSameSideResults += pointInLine > 0 ? 0 : 1
+    }
+    return Math.abs(countSameSideResults) == numSidesOfPolygon ? 1 : -1
+  }
 }
