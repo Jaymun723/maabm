@@ -190,7 +190,7 @@ export class Vec2D {
   normalize(): Vec2D {
     const norm = this.norm()
     let multiplier = norm
-    if(norm > 0) {
+    if (norm > 0) {
       multiplier = 1 / norm
     }
     return this.mul(multiplier)
@@ -204,8 +204,27 @@ export class Vec2D {
     return this.x ** 2 + this.y ** 2
   }
 
-  cross(other: Vec2D): number {
-    return this.x * other.y - this.y * other.x
+  cross(scalar: number): Vec2D
+  cross(other: Vec2D): number
+  cross(a: number | Vec2D): number | Vec2D {
+    if (typeof a === "number") {
+      return new Vec2D(a * this.y, -a * this.x)
+    }
+    return this.x * a.y - this.y * a.x
+  }
+
+  static cross(a: Vec2D, b: Vec2D): number
+  static cross(a: Vec2D, scalar: number): Vec2D
+  static cross(scalar: number, a: Vec2D): Vec2D
+  static cross(a: Vec2D | number, b: Vec2D | number): Vec2D | number {
+    if (typeof a === "number" && typeof b === "object") {
+      return new Vec2D(-a * b.y, a * b.x)
+    } else if (typeof a === "object" && typeof b === "number") {
+      return a.cross(b)
+    } else if (typeof a === "object" && typeof b === "object") {
+      return a.cross(b)
+    }
+    throw new Error("Wrong arguments provided to the `cross` function.")
   }
 
   dot(other: Vec2D): number {
@@ -231,8 +250,6 @@ export class Vec2D {
   }
 
   angleWith(other: Vec2D) {
-    return Math.acos(
-      this.dot(other) / (this.norm() * other.norm())
-    )
+    return Math.acos(this.dot(other) / (this.norm() * other.norm()))
   }
 }
